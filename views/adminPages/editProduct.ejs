@@ -1,0 +1,61 @@
+<%- include('../partials/admin-header.ejs') %>
+
+    <div class="container text-center mt-4 mb-2">
+        <form action="/admin/edit-product/<%= product._id %>" method="POST">
+            <h2>Edit product</h2>
+            <!-- ID  -->
+            <div class="form-floating mb-3">
+                <input value="<%= product._id %>" name="id" type="text" class="form-control" id="floatingInput"
+                    placeholder="id" disabled readonly required>
+                <label for="floatingInput">Product ID</label>
+            </div>
+            <!-- Name  -->
+            <div class="form-floating mb-3">
+                <input value="<%= product.name %>" name="name" type="text" class="form-control" id="floatingInput"
+                    placeholder="name" required>
+                <label for="floatingInput">Product name</label>
+            </div>
+            <!-- Description -->
+            <div class="form-floating mb-3">
+                <input value="<%= product.desc %>" name="desc" type="text" class="form-control" id="floatingInput"
+                    placeholder="desc" required>
+                <label for="floatingInput">Product description</label>
+            </div>
+            <!-- Price -->
+            <div class="form-floating mb-3">
+                <input value="<%= product.price %>" name="price" type="number" class="form-control" id="floatingInput"
+                    placeholder="price" required>
+                <label for="floatingInput">Product price</label>
+            </div>
+            <!-- Category -->
+            <div class="form-floating mb-3">
+                <select name="category" class="form-select text-capitalize" id="cate"
+                    aria-label="Floating label select example" required>
+                    <% category.forEach(function(cate){ %>
+                        <option selected class="text-capitalize" value="<%= cate.title %>">
+                            <%= cate.title %>
+                        </option>
+                        <% }); %>
+                </select>
+                <label for="floatingSelect">Categories</label>
+            </div>
+            <!-- Images file -->
+            <!-- <div class="mb-3 text-start">
+                <label value="<%= product.image %>" for="formFile" class="form-label ">Image</label>
+                <input class="form-control form-control-lg" type="file" id="formFile" name="image">
+            </div> -->
+            <button class="btn btn-danger my-2" type="submit">Edit Product</button>
+        </form>
+
+        <!-- Delete -->
+        <form onsubmit="return confirm('Confirm delete this Product?');" class="mt-4" action="/admin/delete-product" method="POST">
+            <h2>Delete Product</h2>
+            <div class="form-floating mb-3">
+                <input name="id" type="text" class="form-control" id="floatingInput" placeholder="id" required>
+                <label for="floatingInput">Product ID</label>
+            </div>
+            <button class="btn btn-secondary my-2" type="submit">Delete Product</button>
+        </form>
+    </div>
+
+    <%- include('../partials/admin-footer.ejs') %>

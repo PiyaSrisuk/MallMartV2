@@ -1,0 +1,31 @@
+<%- include('../partials/admin-header.ejs') %>
+
+    <div class="container text-center">
+        <!-- Add new -->
+        <h2 class="text-center mt-4 mb-2">Categories</h2>
+        <form action="/admin/category/new" method="POST">
+            <div class="form-floating mb-3">
+                <input name="title" type="text" class="form-control" id="floatingInput" placeholder="category">
+                <label for="floatingInput">New category</label>
+            </div>
+            <button class="btn btn-danger my-2" type="submit">Add new Category</button>
+        </form>
+        <!-- List all -->
+        <h2 class="text-center mt-4 mb-2">List of all Categories</h2>
+        <ul class="list-group">
+            <% category.forEach(function(cate){ %>
+                <li class="list-group-item text-capitalize"><%= cate.title %></li>
+            <% }); %>
+        </ul>
+        <!-- Delete -->
+        <h2 class="text-center mt-4 mb-2">Delete category</h2>
+        <form action="/admin/category/delete" method="POST">
+            <div class="form-floating mb-3">
+                <input name="title" type="text" class="form-control" id="floatingInput" placeholder="category">
+                <label for="floatingInput">Delete category</label>
+            </div>
+            <button class="btn btn-secondary my-2" type="submit">Delete Category</button>
+         </form>
+    </div>
+
+    <%- include('../partials/admin-footer.ejs') %>

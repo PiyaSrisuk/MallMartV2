@@ -1,0 +1,42 @@
+<%- include('../partials/admin-header.ejs') %>
+
+    <div class="container text-center mt-4 mb-2">
+        <form action="/admin/new-product" method="POST" enctype="multipart/form-data">
+            <h2>New product</h2>
+            <!-- Name  -->
+            <div class="form-floating mb-3">
+                <input name="name" type="text" class="form-control" id="floatingInput" placeholder="name" required>
+                <label for="floatingInput">Product name</label>
+            </div>
+            <!-- Description -->
+            <div class="form-floating mb-3">
+                <input name="desc" type="text" class="form-control" id="floatingInput" placeholder="desc" required>
+                <label for="floatingInput">Product description</label>
+            </div>
+            <!-- Price -->
+            <div class="form-floating mb-3">
+                <input name="price" type="number" class="form-control" id="floatingInput" placeholder="price" required>
+                <label for="floatingInput">Product price</label>
+            </div>
+            <!-- Category -->
+            <div class="form-floating mb-3">
+                <select name="category" class="form-select text-capitalize" id="cate"
+                    aria-label="Floating label select example" required>
+                    <% category.forEach(function(cate){ %>
+                        <option selected class="text-capitalize" value="<%= cate.title %>">
+                            <%= cate.title %>
+                        </option>
+                        <% }); %>
+                </select>
+                <label for="floatingSelect">Categories</label>
+            </div>
+            <!-- Images file -->
+            <div class="mb-3 text-start">
+                <label for="formFile" class="form-label ">Image</label>
+                <input class="form-control form-control-lg" type="file" id="formFile" name="image">
+            </div>
+            <button class="btn btn-danger my-2" type="submit">Add new Product</button>
+        </form>
+    </div>
+
+    <%- include('../partials/admin-footer.ejs') %>

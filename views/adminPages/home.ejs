@@ -1,0 +1,79 @@
+<%- include('../partials/admin-header.ejs') %>
+
+    <!-- New product -->
+    <div class="container mt-2 text-center ">
+        <a type="button" class="btn btn-secondary fw-bold border border-5 border-danger" 
+        href="/admin/new-product">Create new Product</a>
+    </div>
+
+    <!-- option  -->
+    <section class="container mt-2 bg-dark">
+        <div class="row">
+            <div class="col text-start d-grid dropdown">
+                <button type="button" class="dropdown-toggle btn btn-danger btn-sm my-2 fw-bolder"
+                    data-bs-toggle="dropdown">Categories</button>
+                <div class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                    <a class="dropdown-item text-capitalize" href="/admin/home">All product</a>
+                    <hr class="dropdown-divider">
+                    <% category.forEach(function(cate){ %>
+                    <a class="dropdown-item text-capitalize" href="/admin/home/category/<%= cate.title %>"><%= cate.title %></a>
+                    <% }); %>
+                </div>
+            </div>
+            <div class="col text-center d-grid dropdown">
+                <button type="button" class="dropdown-toggle btn btn-danger btn-sm my-2 fw-bolder"
+                    data-bs-toggle="dropdown">Filter</button>
+                <div class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                    <a class="dropdown-item" href="admin/home/filter/">Price 0 - 1000</a>
+                    <a class="dropdown-item" href="admin/home/filter/">Price 1001 - 3000</a>
+                    <a class="dropdown-item" href="admin/home/filter/">Price 3001 - 10000</a>
+                    <a class="dropdown-item" href="admin/home/filter/">Price > 10000</a>
+                </div>
+            </div>
+            <div class="col text-end d-grid dropdown">
+                <button type="button" class="dropdown-toggle btn btn-danger btn-sm my-2 fw-bolder"
+                    data-bs-toggle="dropdown">Sort By</button>
+                <div class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                    <a class="dropdown-item" href="/admin/home/sortby/newest">Newest</a>
+                    <a class="dropdown-item" href="/admin/home/sortby/oldest">Oldest</a>
+                    <a class="dropdown-item" href="/admin/home/sortby/pricelowtohigh">Price low to high</a>
+                    <a class="dropdown-item" href="/admin/home/sortby/pricehightolow">Price high to low</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- products  -->
+    <main class="container bg-dark mt-3">
+        <div class="row row-cols-1 row-cols-md-3 g-4 pb-2">
+            <% product.forEach(function(product){ %>
+                <div class="col">
+                    <div class="card">
+                        <!-- Product image -->
+                        <img src="<%= product.image %>" class="card-img-top" style="height: 400px;" alt="">
+                        <div class="card-body">
+                            <!-- Product name -->
+                            <h5 class="card-title fw-bold">
+                                <%= product.name %>
+                            </h5>
+                            <!-- Product description -->
+                            <p class="card-text">
+                                <%= product.desc %>
+                            </p>
+                            <div class="row">
+                                <div class="col text-start">
+                                    <!-- Product price -->
+                                    <h5 class="card-title"><span>฿ <%= product.price %></span></h5>
+                                </div>
+                                <div class="col text-end">
+                                    <a href="/admin/edit-product/<%= product._id %>" class="btn btn-danger">Edit</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <% }); %>
+        </div>
+    </main>
+
+    <%- include('../partials/admin-footer.ejs') %>

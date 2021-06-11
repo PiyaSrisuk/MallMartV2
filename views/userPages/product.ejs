@@ -1,0 +1,29 @@
+<%- include('../partials/user-header.ejs') %>
+
+    <div class="container mt-4 bg-dark">
+        <div class="row">
+            <div class="col-6">
+                <div class="card my-3">
+                    <img src="<%= product.image %>" class="card-img-top" style="height: 100%;"
+                        alt="<%= product.name %>">
+                </div>
+            </div>
+            <div class="col-6 my-3 text-white">
+                <h2 class="card-title">
+                    <%= product.name %>
+                </h2>
+                <p class="card-text">
+                    <%= product.desc %>
+                </p>
+                <h5 class="card-title text-warning">฿ <%= product.price %></span></h5>
+                <form action="/user/cart/add/<%= product._id %>" method="POST">
+                    <div class="text-end">
+                        <button type="submit" class="btn btn-warning me-4 mb-4">Add to
+                            Cart</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <%- include('../partials/user-footer.ejs') %>
