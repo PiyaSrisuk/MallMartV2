@@ -182,7 +182,6 @@ router.get('/cart/qty/inc/:id', (req, res) => {
                 req.user.save();
                 res.redirect('/user/cart');
             }
-
         }
     })
 })
@@ -190,13 +189,15 @@ router.get('/cart/qty/inc/:id', (req, res) => {
 router.get('/cart/qty/dec/:id', (req, res) => {
     console.log('Get | User Cart dec Qty');
     req.user.cart.forEach(function(product){
-        if(product.pQty > 1) {
-            product.pQty -= 1;
-            req.user.save();
-            res.redirect('/user/cart');
-        }else {
-            res.redirect('/user/cart');
-        }
+        if(product.pID === req.params.id) {
+            if(product.pQty > 1) {
+                product.pQty -= 1;
+                req.user.save();
+                res.redirect('/user/cart');
+            }else {
+                res.redirect('/user/cart');
+            }
+        } 
     })
 })
 
