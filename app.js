@@ -56,8 +56,8 @@ const admin = require('./routes/admin.js');
 app.use('/admin', admin);
 app.use('/user', user);
 app.use('/', index);
-app.use('/test', (req, res) => {
-    res.render('signPages/login')
+app.use('*', (req, res) => {
+    res.redirect('user/home');
 });
 
 // run server

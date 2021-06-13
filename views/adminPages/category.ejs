@@ -19,7 +19,7 @@
         </ul>
         <!-- Delete -->
         <h2 class="text-center mt-4 mb-2">Delete category</h2>
-        <form action="/admin/category/delete" method="POST">
+        <form onsubmit="return confirm('Confirm delete this Category?');" action="/admin/category/delete" method="POST">
             <div class="form-floating mb-3">
                 <input name="title" type="text" class="form-control" id="floatingInput" placeholder="category">
                 <label for="floatingInput">Delete category</label>

@@ -4,7 +4,7 @@
     <section class="container mt-4 bg-dark">
         <div class="row">
             <div class="col text-start d-grid dropdown">
-                <button type="button" class="dropdown-toggle btn btn-primary btn-sm my-2 fw-bolder"
+                <button type="button" class="dropdown-toggle btn btn-warning btn-sm my-2 fw-bolder"
                     data-bs-toggle="dropdown">Categories</button>
                 <div class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
                     <a class="dropdown-item text-capitalize" href="/user/home">All product</a>
@@ -15,17 +15,19 @@
                 </div>
             </div>
             <div class="col text-center d-grid dropdown">
-                <button type="button" class="dropdown-toggle btn btn-primary btn-sm my-2 fw-bolder"
+                <button type="button" class="dropdown-toggle btn btn-warning btn-sm my-2 fw-bolder"
                     data-bs-toggle="dropdown">Filter</button>
                 <div class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                    <a class="dropdown-item" href="#">Price 0 - 1000</a>
-                    <a class="dropdown-item" href="#">Price 1001 - 3000</a>
-                    <a class="dropdown-item" href="#">Price 3001 - 10000</a>
-                    <a class="dropdown-item" href="#">Price > 10000</a>
+                    <a class="dropdown-item" href="/user/home/filter/00">All</a>
+                    <hr class="dropdown-divider">
+                    <a class="dropdown-item" href="/user/home/filter/01">Price 0 - 1000</a>
+                    <a class="dropdown-item" href="/user/home/filter/13">Price 1001 - 3000</a>
+                    <a class="dropdown-item" href="/user/home/filter/31">Price 3001 - 10000</a>
+                    <a class="dropdown-item" href="/user/home/filter/10">Price > 10000</a>
                 </div>
             </div>
             <div class="col text-end d-grid dropdown">
-                <button type="button" class="dropdown-toggle btn btn-primary btn-sm my-2 fw-bolder"
+                <button type="button" class="dropdown-toggle btn btn-warning btn-sm my-2 fw-bolder"
                     data-bs-toggle="dropdown">Sort By</button>
                 <div class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
                     <a class="dropdown-item" href="/user/home/sortby/newest">Newest</a>
@@ -60,7 +62,7 @@
                                     <h5 class="card-title"><span>฿ <%= product.price %></span></h5>
                                 </div>
                                 <div class="col text-end">
-                                    <a href="/user/home/product/<%= product._id %>" class="btn btn-primary">view</a>
+                                    <a href="/user/home/product/<%= product._id %>" class="btn btn-warning fw-bold">view</a>
                                 </div>
                             </div>
                         </div>

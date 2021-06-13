@@ -1,8 +1,10 @@
 const router = require('express').Router();
 const Product = require('../models/product.js');
-let bufferProduct = [{}];
 const Category = require('../models/category.js');
 const multer = require('multer');
+
+let bufferProduct = [{}];
+let bufferCategory = [{}];
 
 const fileStorageEngine = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -27,14 +29,12 @@ router.get('/home', (req, res) => {
         if (err) {
             console.log(err);
         } else {
+            bufferCategory = allCategory;
             Product.find({}).sort({ createdAt: -1 }).exec(function (err, allProduct) {
                 if (err) {
                     console.log(err);
                 } else {
                     bufferProduct = allProduct;
-                    console.log(bufferProduct);
-                    bufferProduct.sort((a, b) => a.price > b.price && -1 || 1);
-                    console.log(bufferProduct);
                     res.render('adminPages/home.ejs', { product: bufferProduct, category: allCategory });
                 }
             });
@@ -45,62 +45,40 @@ router.get('/home', (req, res) => {
 // Home sort by
 router.get('/home/sortby/:option', (req, res) => {
     console.log('Get | Admin home Sort by');
-    Category.find({}).sort({ title: 1}).exec(function(err, allCategory) {
-        if (err) {
-            console.log(err);
-        }
-        else if (req.params.option === 'newest') {
-            Product.find({}).sort({ createdAt: -1 }).exec(function (err, allProduct) {
-                if (err) {
-                    console.log(err);
-                } else {
-                    res.render('adminPages/home.ejs', { product: allProduct, category: allCategory });
-                }
-            })
-        }
-        else if (req.params.option === 'oldest') {
-            Product.find({}).sort({ createdAt: 1 }).exec(function (err, allProduct) {
-                if (err) {
-                    console.log(err);
-                } else {
-                    res.render('adminPages/home.ejs', { product: allProduct, category: allCategory });
-                }
-            });
-        }
-        else if (req.params.option === 'pricelowtohigh') {
-            Product.find({}).sort({ price: 1 }).exec(function (err, allProduct) {
-                if (err) {
-                    console.log(err);
-                } else {
-                    res.render('adminPages/home.ejs', { product: allProduct, category: allCategory });
-                }
-            });
-        }
-        else if (req.params.option === 'pricehightolow') {
-            Product.find({}).sort({ price: -1 }).exec(function (err, allProduct) {
-                if (err) {
-                    console.log(err);
-                } else {
-                    res.render('adminPages/home.ejs', { product: allProduct, category: allCategory });
-                }
-            });
-        }
-        else {
-            Product.find({}, (function (err, allProduct) {
-                if (err) {
-                    console.log(err);
-                } else {
-                    res.render('adminPages/home.ejs', { product: allProduct, category: allCategory });
-                }
-            }));
-        }
-    })
+    let sortProduct, option = req.params.option;
+    if (option === 'newest') {
+        sortProduct = bufferProduct.sort((a, b) => a.createdAt > b.createdAt && -1 || 1);
+        console.log(sortProduct);
+    } else if (option === 'oldest') {
+        sortProduct = bufferProduct.sort((a, b) => a.createdAt < b.createdAt && -1 || 1);
+    } else if (option === 'pricelowtohigh') {
+        sortProduct = bufferProduct.sort((a, b) => a.price < b.price && -1 || 1);
+    } else if (option === 'pricehightolow') {
+        sortProduct = bufferProduct.sort((a, b) => a.price > b.price && -1 || 1);
+    } else {
+        res.redirect('/admin/home');
+    }
+    res.render('adminPages/home.ejs', { product: sortProduct, category: bufferCategory})
 })
 
-// Home filter +++
+// Home filter
 router.get('/home/filter/:option', (req, res) => {
     console.log('Get | Admin home Filter');
-
+    let min, max;
+    switch (req.params.option) {
+        case '01' : min = 0, max = 1000; break;
+        case '13' : min = 1001, max = 3000; break;
+        case '31' : min = 3001, max = 10000; break;
+        case '10' : min = 10000, max = 999999999; break;
+        default : min = 0, max = 999999999; break;
+    }
+    let filterProduct = [];
+    bufferProduct.forEach(function(product){   
+        if (product.price >= min && product.price <= max) {
+            filterProduct.push(product);
+        }
+    })
+    res.render('adminPages/home.ejs', { product: filterProduct, category: bufferCategory});
 })
 
 // Home search
@@ -187,6 +165,7 @@ router.get('/home/category/:title', (req, res) => {
                 if (err) {
                     console.log(err);
                 } else {
+                    bufferProduct = allProduct;
                     res.render('adminPages/home.ejs', { category: allCategory, product: allProduct });
                 }
             }))
@@ -201,6 +180,7 @@ router.get('/category', (req, res) => {
         if (err) {
             console.log(err);
         } else {
+            bufferCategory = category;
             res.render('adminPages/category.ejs', { category: category });
         }
     })
@@ -234,6 +214,7 @@ router.post('/category/delete', (req, res) => {
     })
 })   
 
+// Get new Product
 router.get('/new-product', (req, res) => {
     console.log('Get | Admin new Product');
     Category.find({}).sort({ title: 1}).exec(function(err, allCategory){
@@ -245,6 +226,7 @@ router.get('/new-product', (req, res) => {
     })
 })
 
+// Post new Product
 router.post('/new-product', upload.single("image"), (req, res) => {
     console.log('POST | Admin new Product');
     const newProduct = { 
@@ -271,6 +253,7 @@ router.get('/order-record', (req, res) => {
     res.render('adminPages/orderRecord.ejs')
 })
 
+// Log out
 router.get('/logout', function (req, res) {
     req.logout();
     console.log('logout success')
