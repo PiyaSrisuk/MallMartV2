@@ -117,26 +117,36 @@ router.get('/home/product/:id', (req, res) => {
     }))
 })
 
-router.post('/cart/add/:id', isLoggedIn, (req, res) => {
+router.post('/cart/add/:id', isLoggedIn, async (req, res) => {
     console.log('POST | User Cart Add');
-    let newCart;
-    Product.findById({_id: req.params.id}, (function(err, product){
-        if (err) {
-            console.log(err);
-        } else {
-            newCart = {
-                pID: product.id,
-                pImg: product.image,
-                pName: product.name,
-                pQty: parseInt(req.body.quantity),
-                pPrice: product.price
-            }
-            req.user.cart.push(newCart);
-            req.user.save();
-            console.log(req.user.cart)
-            res.redirect('/user/home');
+    let newCart, inCart = false;
+    req.user.cart.forEach(function(product){
+        if (product.pID === req.params.id) {
+            console.log('Product already in cart, can not add this product to cart');
+            inCart = true;
         }
-    }))  
+    })
+    if(!inCart) {
+        Product.findById({_id: req.params.id}, (function(err, product){
+            if (err) {
+                console.log(err);
+            } else {
+                newCart = {
+                    pID: product.id,
+                    pImg: product.image,
+                    pName: product.name,
+                    pQty: parseInt(req.body.quantity),
+                    pPrice: product.price
+                }
+                req.user.cart.push(newCart);
+                req.user.save();
+                res.redirect('/user/home');
+            }
+        }))  
+    }else {
+        res.redirect('/user/home');
+    }
+    
 })
 
 router.get('/cart', (req, res) => {
@@ -161,6 +171,33 @@ router.get('/cart/buy', (req, res) => {
     req.user.cart = [];
     req.user.save();
     res.redirect('/user/cart');
+})
+
+router.get('/cart/qty/inc/:id', (req, res) => {
+    console.log('Get | User Cart inc Qty');
+    req.user.cart.forEach(function(product){
+        if(product.pID === req.params.id) {
+            if(product.pID === req.params.id) {
+                product.pQty += 1;
+                req.user.save();
+                res.redirect('/user/cart');
+            }
+
+        }
+    })
+})
+
+router.get('/cart/qty/dec/:id', (req, res) => {
+    console.log('Get | User Cart dec Qty');
+    req.user.cart.forEach(function(product){
+        if(product.pQty > 1) {
+            product.pQty -= 1;
+            req.user.save();
+            res.redirect('/user/cart');
+        }else {
+            res.redirect('/user/cart');
+        }
+    })
 })
 
 // check log in

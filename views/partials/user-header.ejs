@@ -2,58 +2,60 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MallMart</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MallMart</title>
 
-    <!-- CSS origin -->
-    <link rel="stylesheet" href="/stylesheets/style.css">
-    <!-- CSS Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-    <!-- JS Bootstrap -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
-        crossorigin="anonymous"></script>
+  <!-- CSS origin -->
+  <link rel="stylesheet" href="/stylesheets/style.css">
+  <!-- CSS Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+  <!-- JS Bootstrap -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+    crossorigin="anonymous"></script>
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <a class="navbar-brand text-warning fw-bolder" style="text-shadow: 1px 2px white;" href="/user/home">MallMart</a>
-          <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link text-white" aria-current="page" href="/user/home">Home</a>
-              </li>
-              <% if(!currentUser) {%>
-              <li class="nav-item">
-                <a class="nav-link text-white" href="/login">Login</a>
-              </li>
-              <% } else { %>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03"
+        aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand text-warning fw-bolder" style="text-shadow: 1px 2px white;" href="/user/home">MallMart</a>
+      <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link text-white" aria-current="page" href="/user/home">Home</a>
+          </li>
+          <% if(!currentUser) {%>
+            <li class="nav-item">
+              <a class="nav-link text-white" href="/login">Login</a>
+            </li>
+            <% } else { %>
               <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle text-warning" data-bs-toggle="dropdown">User: <%= currentUser.username %></a>
+                <a class="nav-link dropdown-toggle text-warning" data-bs-toggle="dropdown">User: <%=
+                    currentUser.username %></a>
                 <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                    <li><a href="#" class="dropdown-item text-white">User profile</a></li>
-                    <li><a href="#" class="dropdown-item text-white">Buy history</a></li>
-                    <li>
-                        <hr class="dropdown-divider"></a>
-                    </li>
-                    <li><a href="/logout" class="dropdown-item text-white">Log out</a></li>
+                  <li><a href="#" class="dropdown-item text-white">User profile</a></li>
+                  <li><a href="#" class="dropdown-item text-white">Buy history</a></li>
+                  <li>
+                    <hr class="dropdown-divider"></a>
+                  </li>
+                  <li><a href="/logout" class="dropdown-item text-white">Log out</a></li>
                 </ul>
               <li class="nav-item">
                 <a class="nav-link text-white" href="/user/cart">Cart (<%= currentUser.cart.length %>)</a>
               </li>
               <% } %>
-            </ul>
-            <form action="/user/home/search" method="POST" class="d-flex">
-              <input name="key" class="form-control me-2" type="search" placeholder="Search">
-              <button class="btn btn-warning" type="submit">Search</button>
-            </form>
-          </div>
-        </div>
-      </nav>
+        </ul>
+        <form action="/user/home/search" method="POST" class="d-flex">
+          <input name="key" class="form-control me-2" type="search" placeholder="Search">
+          <button class="btn btn-warning" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </nav>
