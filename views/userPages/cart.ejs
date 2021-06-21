@@ -12,7 +12,7 @@
         <% } else { %>
           <thead>
             <tr>
-              <th scope="col">#</th>
+              <th scope="col">No.</th>
               <th scope="col">Image</th>
               <th scope="col">Name</th>
               <th scope="col">Price</th>
@@ -29,25 +29,25 @@
                     <th>
                       <%= i %>
                     </th>
-                    <td><img src="<%= product.pImg %>" alt="<%= product.pName %>" style="width:100px"></td>
+                    <td><img src="<%= product.img %>" alt="<%= product.name %>" style="width:100px"></td>
                     <td>
-                      <%= product.pName %>
+                      <%= product.name %>
                     </td>
                     <td>
-                      <%= product.pPrice %>
+                      <%= product.price %>
                     </td>
                     <td>
                       <div class="text-center">
-                        <a href="/user/cart/qty/dec/<%= product.pID %>" class="btn btn-secondary fw-bolder">-</a>
-                        <input class="text-center"value="<%= product.pQty %>" disabled>
-                        <a href="/user/cart/qty/inc/<%= product.pID %>" class="btn btn-secondary fw-bolder">+</a>
+                        <a href="/user/cart/qty/dec/<%= product.id %>" class="btn btn-secondary fw-bolder">-</a>
+                        <input class="text-center"value="<%= product.qty %>" disabled>
+                        <a href="/user/cart/qty/inc/<%= product.id %>" class="btn btn-secondary fw-bolder">+</a>
                       </div>
                     </td>
                     <td>
-                      <%= product.pPrice * product.pQty %>
+                      <%= product.price * product.qty %>
                     </td>
-                    <% allP +=product.pPrice * product.pQty %>
-                      <td><a href="/user/cart/delete/<%= product.pID %>" class="btn btn-danger">Delete</a></td>
+                    <% allP +=product.price * product.qty %>
+                      <td><a href="/user/cart/delete/<%= product.id %>" class="btn btn-danger">Delete</a></td>
                   </tr>
                   <% }) %>
           </tbody>

@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const Product = require('../models/product.js');
 const Category = require('../models/category.js');
+const Record = require('../models/record.js');
 const multer = require('multer');
 
 let bufferProduct = [{}];
@@ -48,7 +49,6 @@ router.get('/home/sortby/:option', (req, res) => {
     let sortProduct, option = req.params.option;
     if (option === 'newest') {
         sortProduct = bufferProduct.sort((a, b) => a.createdAt > b.createdAt && -1 || 1);
-        console.log(sortProduct);
     } else if (option === 'oldest') {
         sortProduct = bufferProduct.sort((a, b) => a.createdAt < b.createdAt && -1 || 1);
     } else if (option === 'pricelowtohigh') {
@@ -246,11 +246,16 @@ router.post('/new-product', upload.single("image"), (req, res) => {
     })
 })
 
-// Optional
 // Order record
-router.get('/order-record', (req, res) => {
+router.get('/record', (req, res) => {
     console.log('Get | Admin order record');
-    res.render('adminPages/orderRecord.ejs')
+    Record.find({}).sort({ createdAt: -1 }).exec(function (err, allRecords){
+        if (err) {
+            console.log(err);
+        } else {
+            res.render('adminPages/record.ejs', {record: allRecords});
+        }
+    })
 })
 
 // Log out

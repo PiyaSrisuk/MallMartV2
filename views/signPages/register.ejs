@@ -1,23 +1,39 @@
 <%- include('../partials/user-header.ejs') %>
 
-    <div class="container">
-        <form action="/register" method="post">
-            <h2 class="mt-4 mb-2 text-decoration-underline">Register</h2>
-            <div class="form-floating mb-3">
-                <input name="username" type="text" class="form-control" id="floatingInput" placeholder="Username">
-                <label for="floatingInput">Username</label>
-            </div>
-            <div class="form-floating mb-3">
-                <input name="email" type="email" class="form-control" id="floatingInput" placeholder="Email@example.com">
-                <label for="floatingInput">Email address</label>
-            </div>
-            <div class="form-floating">
-                <input name="password" type="password" class="form-control" id="floatingPassword" placeholder="Password">
-                <label for="floatingPassword">Password</label>
-            </div>
-            <a class="text-decoration-underline my-2 mx-2 text-secondary" href="/login">go to LOGIN</a>
-            <button class="btn btn-primary my-2" type="submit">Regist</button>
-        </form>
-    </div>
+    <!-- <div class="container"> -->
+        <div class="border mt-4" style="width: 512px; margin: auto;">
+            <div class="bg-primary" style="height: 20px"></div>
+            <h2 class="text-center my-4">Register</h2>
+            <form action="/register" method="post">
+                <div class="form-floating mb-3 mx-4">
+                    <input name="username" type="text" class="form-control" required>
+                    <label for="floatingUsername">Username</label>
+                </div>
+                <div class="form-floating mb-3 mx-4">
+                    <input name="email" type="email" class="form-control" required>
+                    <label for="floatingInput">Email address</label>
+                </div>
+                <div class="form-floating mb-3 mx-4">
+                    <input name="password" type="password" class="form-control" required>
+                    <label for="floatingPassword">Password</label>
+                </div>
+                <!-- <div class="form-floating mb-3 mx-4">
+                    <input name="confirmPassword" type="password" class="form-control" required>
+                    <label for="floatingconfirmPassword">Confirm Password</label>
+                </div> -->
+    
+                <!-- Button -->
+                <div class="text-center mb-3 mx-4">
+                    <button type="submit" class="btn btn-primary fs-5">Regist</button>
+                </div>
+                <a class="text-secondary my-3 mx-4" href="/login"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+                        height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                            d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+                    </svg> go to Log in</a>
+                <div class="bg-primary mt-3" style="height: 20px"></div>
+            </form>
+        </div>
+        <!-- </div> -->
 
     <%- include('../partials/user-footer.ejs') %>

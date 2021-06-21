@@ -40,15 +40,14 @@
                 <a class="nav-link dropdown-toggle text-warning" data-bs-toggle="dropdown">User: <%=
                     currentUser.username %></a>
                 <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                  <li><a href="#" class="dropdown-item text-white">User profile</a></li>
-                  <li><a href="#" class="dropdown-item text-white">Buy history</a></li>
+                  <li><a href="/user/record" class="dropdown-item text-white">Order record</a></li>
                   <li>
                     <hr class="dropdown-divider"></a>
                   </li>
                   <li><a href="/logout" class="dropdown-item text-white">Log out</a></li>
                 </ul>
               <li class="nav-item">
-                <a class="nav-link text-white" href="/user/cart">Cart (<%= currentUser.cart.length %>)</a>
+                <a class="nav-link text-white" href="/user/cart">Cart <span class="badge bg-warning text-dark"><%= currentUser.cart.length %></span></a>
               </li>
               <% } %>
         </ul>

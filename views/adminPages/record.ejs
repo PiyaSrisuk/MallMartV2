@@ -1,0 +1,40 @@
+<%- include('../partials/admin-header.ejs') %>
+
+<div class="container">
+    <h2>Order Record</h2>
+    <hr class="divider my-4">
+        <% record.reverse().forEach(function(record){ %>
+            <h4>User ID: <span class="text-danger"><%= record.user %></span> | <%= record.date %></h4>
+            <table class="table">
+                <thead>
+                    <tr class="bg-secondary text-light">
+                        <th scope="col" class="w-10">No.</th>
+                        <th scope="col" class="w-40">Name</th>
+                        <th scope="col" class="w-15">Price</th>
+                        <th scope="col" class="w-15">Quantity</th>
+                        <th scope="col" class="w-20">Total price</th>
+                    </tr>
+                    <tbody>
+                        <% let i=0, ttp=0 %>
+                        <% record.product.forEach(function(product){ %>
+                        <tr>
+                            <% i +=1 %> 
+                            <th scope="row"><%= i %></td>
+                            <td scope="col"><%= product.name %></td>
+                            <td scope="col"><%= product.price %></td>
+                            <td scope="col"><%= product.qty %></td>
+                            <td scope="col"><%= product.price * product.qty %></td>
+                            <% ttp +=(product.price * product.qty) %>
+                        </tr>  
+                        <% }) %>
+                    </tbody>        
+                </thead>
+            </table>
+            <div class="text-end mb-2">
+                <h3 class="text-decoration-underline">Total price = <%= ttp %>
+                </h3>
+            </div>
+            <% }) %>
+</div>
+
+<%- include('../partials/admin-footer.ejs') %>

@@ -1,12 +1,12 @@
 <%- include('../partials/user-header.ejs') %>
 
     <!-- option  -->
-    <section class="container mt-4 bg-dark">
+    <section class="container mt-4">
         <div class="row">
             <div class="col text-start d-grid dropdown">
-                <button type="button" class="dropdown-toggle btn btn-warning btn-sm my-2 fw-bolder"
+                <button type="button" class="dropdown-toggle btn btn-warning btn-sm my-2 fw-bolder border border-3 border-dark"
                     data-bs-toggle="dropdown">Categories</button>
-                <div class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                <div class="dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink">
                     <a class="dropdown-item text-capitalize" href="/user/home">All product</a>
                     <hr class="dropdown-divider">
                     <% category.forEach(function(cate){ %>
@@ -15,9 +15,9 @@
                 </div>
             </div>
             <div class="col text-center d-grid dropdown">
-                <button type="button" class="dropdown-toggle btn btn-warning btn-sm my-2 fw-bolder"
+                <button type="button" class="dropdown-toggle btn btn-warning btn-sm my-2 fw-bolder border border-3 border-dark"
                     data-bs-toggle="dropdown">Filter</button>
-                <div class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                <div class="dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink">
                     <a class="dropdown-item" href="/user/home/filter/00">All</a>
                     <hr class="dropdown-divider">
                     <a class="dropdown-item" href="/user/home/filter/01">Price 0 - 1000</a>
@@ -27,9 +27,9 @@
                 </div>
             </div>
             <div class="col text-end d-grid dropdown">
-                <button type="button" class="dropdown-toggle btn btn-warning btn-sm my-2 fw-bolder"
+                <button type="button" class="dropdown-toggle btn btn-warning btn-sm my-2 fw-bolder border border-3 border-dark"
                     data-bs-toggle="dropdown">Sort By</button>
-                <div class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                <div class="dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink">
                     <a class="dropdown-item" href="/user/home/sortby/newest">Newest</a>
                     <a class="dropdown-item" href="/user/home/sortby/oldest">Oldest</a>
                     <a class="dropdown-item" href="/user/home/sortby/pricelowtohigh">Price low to high</a>
@@ -40,8 +40,8 @@
     </section>
     
     <!-- products  -->
-    <main class="container bg-dark mt-3">
-        <div class="row row-cols-1 row-cols-md-3 g-4 pb-2">
+    <main class="container mt-3">
+        <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 row-cols-1 g-4 pb-2">
             <% product.forEach(function(product){ %>
                 <div class="col">
                     <div class="card">

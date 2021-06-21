@@ -8,13 +8,14 @@ const userSchema = mongoose.Schema({
     isAdmin:    { type: Boolean, default: false },
     cart: [
         {
-            pID: { type: String, required: true},
-            pImg: { type: String, required: true},
-            pName: { type: String, required: true},
-            pQty: { type: Number, required: true},
-            pPrice: { type: Number, required: true}
+            id: { type: String, required: true},
+            img: { type: String, required: true},
+            name: { type: String, required: true},
+            qty: { type: Number, required: true},
+            price: { type: Number, required: true}
         }
-    ]
+    ],
+    orderRecord: []
 }, {
     timestamps: true
 })
