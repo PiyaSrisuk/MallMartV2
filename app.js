@@ -56,9 +56,9 @@ const admin = require('./routes/admin.js');
 app.use('/admin', admin);
 app.use('/user', user);
 app.use('/', index);
-app.use('*', (req, res) => {
-    res.redirect('user/home');
-});
+// app.use('*', (req, res) => {
+//     res.redirect('user/home');
+// // });
 
 // run server
 app.listen(config.port, () => {

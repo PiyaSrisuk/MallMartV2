@@ -4,66 +4,70 @@ const Category = require('../models/category.js');
 const User = require('../models/user.js');
 const Record = require('../models/record.js');
 
-let bufferProduct = [{}];
-let bufferCategory = [{}];
+// current option
+let curCategory = {};
+let curFilter = {};
+let curSortby = { createdAt: -1 };
 
-// Default home
+// default home
 router.get('/home', (req, res) => {
-    console.log('Get | User home show Product');
+    console.log('Get | User home');
     Category.find({}).sort({ title: 1 }).exec(function (err, allCategory) {
         if (err) {
             console.log(err);
         } else {
-            bufferCategory = allCategory;
-            Product.find({}).sort({ createdAt: -1 }).exec(function (err, allProduct) {
+            let curCategoryFilter = { ...curCategory, ...curFilter };
+            // console.log(curCategoryFilter)
+            Product.find(curCategoryFilter).sort(curSortby).exec(function (err, allProduct) {
                 if (err) {
                     console.log(err);
                 } else {
-                    bufferProduct = allProduct;
-                    res.render('userPages/home.ejs', { product: allProduct, category: allCategory });
+                    res.render('userPages/home.ejs', { product: allProduct, category: allCategory});
                 }
             });
         }
     })
 })
 
+// Home by Category page
+router.get('/home/category/:title', (req, res) => {
+    console.log('Get | User Home by Category');
+    let category = req.params.title.toLowerCase();
+    if (category === 'all') {
+        curCategory = {};
+    } else {
+        curCategory = { category: category };
+    }
+    res.redirect('/user/home');
+})
+
+// Home filter
+router.get('/home/filter/:option', (req, res) => {
+    console.log('Get | User home Filter');
+    switch (req.params.option) {
+        case '01': curFilter = { "price": { $gte: 0, $lte: 1000 } }; break;
+        case '13': curFilter = { "price": { $gte: 1000, $lte: 3000 } }; break;
+        case '31': curFilter = { "price": { $gte: 3001, $lte: 10000 } }; break;
+        case '10': curFilter = { "price": { $gte: 10001, $lte: 999999999 } }; break;
+        default: curFilter = { "price": { $gte: 0, $lte: 999999999 } }; break;
+    }
+    res.redirect('/user/home');
+})
+
 // Home sort by
 router.get('/home/sortby/:option', (req, res) => {
     console.log('Get | User home Sort by');
-    let sortProduct, option = req.params.option;
-    if (option === 'newest') {      
-        sortProduct = bufferProduct.sort((a, b) => a.createdAt > b.createdAt && -1 || 1);
+    let option = req.params.option;
+    if (option === 'newest') {
+        curSortby = { createdAt: -1 };
     } else if (option === 'oldest') {
-        sortProduct = bufferProduct.sort((a, b) => a.createdAt < b.createdAt && -1 || 1);
+        curSortby = { createdAt: 1 };
     } else if (option === 'pricelowtohigh') {
-        sortProduct = bufferProduct.sort((a, b) => a.price < b.price && -1 || 1);
+        curSortby = { price: 1 };
     } else if (option === 'pricehightolow') {
-        sortProduct = bufferProduct.sort((a, b) => a.price > b.price && -1 || 1);
-    } else {
-        res.redirect('/user/home');
+        curSortby = { price: -1 };
     }
-    bufferSortby = option;
-    res.render('userPages/home.ejs', { product: sortProduct, category: bufferCategory })
-})
-
-// Home filter +++
-router.get('/home/filter/:option', (req, res) => {
-    console.log('Get | User home Filter');
-    let min, max;
-    switch (req.params.option) {
-        case '01': min = 0, max = 1000; break;
-        case '13': min = 1001, max = 3000; break;
-        case '31': min = 3001, max = 10000; break;
-        case '10': min = 10000, max = 999999999; break;
-        default: min = 0, max = 999999999; break;
-    }
-    let filterProduct = [];
-    bufferProduct.forEach(function (product) {
-        if (product.price >= min && product.price <= max) {
-            filterProduct.push(product);
-        }
-    })
-    res.render('userPages/home.ejs', { product: filterProduct, category: bufferCategory });
+    res.redirect('/user/home');
 })
 
 // Home search
@@ -78,33 +82,11 @@ router.post('/home/search', (req, res) => {
                 if (err) {
                     console.log(err);
                 } else {
-                    bufferProduct = allProduct;
-                    res.render('userPages/home.ejs', { product: bufferProduct, category: allCategory });
+                    res.render('userPages/home.ejs', { product: allProduct, category: allCategory });
                 }
             });
         }
     })
-})
-
-// Home by Category page
-router.get('/home/category/:title', (req, res) => {
-    console.log('Get | User Home by Category');
-    const category = req.params.title.toLowerCase();
-    Category.find({}, (function (err, allCategory) {
-        if (err) {
-            console.log(err);
-        } else {
-            buffCategory = allCategory;
-            Product.find({ category: category }, (function (err, allProduct) {
-                if (err) {
-                    console.log(err);
-                } else {
-                    bufferProduct = allProduct;
-                    res.render('userPages/home.ejs', { category: allCategory, product: allProduct });
-                }
-            }))
-        }
-    }))
 })
 
 router.get('/home/product/:id', (req, res) => {

@@ -7,7 +7,7 @@
                 <button type="button" class="dropdown-toggle btn btn-warning btn-sm my-2 fw-bolder border border-3 border-dark"
                     data-bs-toggle="dropdown">Categories</button>
                 <div class="dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink">
-                    <a class="dropdown-item text-capitalize" href="/user/home">All product</a>
+                    <a class="dropdown-item text-capitalize" href="/user/home/category/all">All product</a>
                     <hr class="dropdown-divider">
                     <% category.forEach(function(cate){ %>
                     <a class="dropdown-item text-capitalize" href="/user/home/category/<%= cate.title %>"><%= cate.title %></a>

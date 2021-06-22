@@ -51,7 +51,7 @@
         <form onsubmit="return confirm('Confirm delete this Product?');" class="mt-4" action="/admin/delete-product" method="POST">
             <h2>Delete Product</h2>
             <div class="form-floating mb-3">
-                <input name="id" type="text" class="form-control" id="floatingInput" placeholder="id" required>
+                <input name="id" type="text" class="form-control" id="floatingInput" placeholder="id" autocomplete="off" required>
                 <label for="floatingInput">Product ID</label>
             </div>
             <button class="btn btn-secondary my-2" type="submit">Delete Product</button>
