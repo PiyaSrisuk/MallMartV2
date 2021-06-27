@@ -6,8 +6,9 @@ const productSchema = mongoose.Schema({
     desc:       {type: String},
     price:      {type: Number, required: true},
     category:   {type: String, required: true},
-    so:        {type: Number, default: 0}, // sold order
-    sp:        {type: Number, default: 0}  // sold piece
+    so:         {type: Number, default: 0},     // sold order
+    sp:         {type: Number, default: 0},     // sold piece
+    networth:   {type: Number, default: 0}
 }, {
     timestamps: true
 })

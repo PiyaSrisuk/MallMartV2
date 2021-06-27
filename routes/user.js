@@ -183,6 +183,7 @@ router.get('/cart/buy', (req, res) => {
                     } else {
                         realProduct.so += 1;
                         realProduct.sp += product.qty;
+                        realProduct.networth += (product.qty * product.price);
                         realProduct.save();
                     }        
                 })

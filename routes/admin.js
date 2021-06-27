@@ -244,7 +244,7 @@ router.post('/new-product', upload.single("image"), (req, res) => {
 // Order record
 router.get('/record', (req, res) => {
     console.log('Get | Admin order record');
-    Product.find({}).sort({sp: -1, so: -1, price: -1}).exec(function (err, allProduct) {
+    Product.find({}).sort({sp: -1, so: -1, networth: -1, price: -1}).exec(function (err, allProduct) {
         if (err) {
             console.log(err);
         } else {

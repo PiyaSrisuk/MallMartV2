@@ -11,6 +11,7 @@
               <th scope="col">Price</th>
               <th scope="col">Sold (Order)</th>
               <th scope="col">Sold (Piece)</th>
+              <th scope="col">Networth</th>
             </tr>
           </thead>
           <tbody>
@@ -32,7 +33,10 @@
                 </td>
                 <td>
                     <%= product.sp.toLocaleString() %>
-                </td>         
+                </td>        
+                <td>
+                  <%= product.networth.toLocaleString() %>
+              </td>  
               </tr>
               <% }) %>
       </tbody>
