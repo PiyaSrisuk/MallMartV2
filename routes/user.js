@@ -22,7 +22,7 @@ router.get('/home', (req, res) => {
                 if (err) {
                     console.log(err);
                 } else {
-                    res.render('userPages/home.ejs', { product: allProduct, category: allCategory});
+                    res.render('userPages/home.ejs', { product: allProduct, category: allCategory });
                 }
             });
         }
@@ -180,11 +180,9 @@ router.get('/cart/qty/inc/:id', (req, res) => {
     console.log('Get | User Cart inc Qty');
     req.user.cart.forEach(function (product) {
         if (product.id === req.params.id) {
-            if (product.id === req.params.id) {
-                product.qty += 1;
-                req.user.save();
-                res.redirect('/user/cart');
-            }
+            product.qty += 1;
+            req.user.save();
+            res.redirect('/user/cart');
         }
     })
 })
