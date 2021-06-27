@@ -9,6 +9,10 @@ let curCategory = {};
 let curFilter = {};
 let curSortby = { createdAt: -1 };
 
+let displayCategory = 'all';
+let displayFilter = 'all';
+let displaySortby = 'newest';
+
 // default home
 router.get('/home', (req, res) => {
     console.log('Get | User home');
@@ -22,7 +26,8 @@ router.get('/home', (req, res) => {
                 if (err) {
                     console.log(err);
                 } else {
-                    res.render('userPages/home.ejs', { product: allProduct, category: allCategory });
+                    res.render('userPages/home.ejs', { product: allProduct, category: allCategory, 
+                        displayCategory: displayCategory, displayFilter: displayFilter, displaySortby: displaySortby });
                 }
             });
         }
@@ -35,8 +40,10 @@ router.get('/home/category/:title', (req, res) => {
     let category = req.params.title.toLowerCase();
     if (category === 'all') {
         curCategory = {};
+        displayCategory = 'all';
     } else {
         curCategory = { category: category };
+        displayCategory = category.toString();
     }
     res.redirect('/user/home');
 })
@@ -45,11 +52,11 @@ router.get('/home/category/:title', (req, res) => {
 router.get('/home/filter/:option', (req, res) => {
     console.log('Get | User home Filter');
     switch (req.params.option) {
-        case '01': curFilter = { "price": { $gte: 0, $lte: 1000 } }; break;
-        case '13': curFilter = { "price": { $gte: 1000, $lte: 3000 } }; break;
-        case '31': curFilter = { "price": { $gte: 3001, $lte: 10000 } }; break;
-        case '10': curFilter = { "price": { $gte: 10001, $lte: 999999999 } }; break;
-        default: curFilter = { "price": { $gte: 0, $lte: 999999999 } }; break;
+        case '01': curFilter = { "price": { $gte: 0, $lte: 1000 } }, displayFilter = 'price 0 - 1,000'; break;
+        case '13': curFilter = { "price": { $gte: 1000, $lte: 3000 } }, displayFilter = 'price 1,001 - 3,000'; break;
+        case '31': curFilter = { "price": { $gte: 3001, $lte: 10000 } }, displayFilter = 'price 3,001 - 10,000'; break;
+        case '10': curFilter = { "price": { $gte: 10001, $lte: 999999999 } }, displayFilter = 'price > 10,000'; break;
+        default: curFilter = { "price": { $gte: 0, $lte: 999999999 } }, displayFilter = 'all'; break;
     }
     res.redirect('/user/home');
 })
@@ -60,12 +67,16 @@ router.get('/home/sortby/:option', (req, res) => {
     let option = req.params.option;
     if (option === 'newest') {
         curSortby = { createdAt: -1 };
+        displaySortby = 'newest';
     } else if (option === 'oldest') {
         curSortby = { createdAt: 1 };
+        displaySortby = 'oldest';
     } else if (option === 'pricelowtohigh') {
         curSortby = { price: 1 };
+        displaySortby = 'price low to high';
     } else if (option === 'pricehightolow') {
         curSortby = { price: -1 };
+        displaySortby = 'price high to low';
     }
     res.redirect('/user/home');
 })
@@ -166,6 +177,15 @@ router.get('/cart/buy', (req, res) => {
                     qty: product.qty
                 }
                 newRecord.product.push(productRecord);
+                Product.findById({ _id: product.id}, function (err, realProduct) {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        realProduct.so += 1;
+                        realProduct.sp += product.qty;
+                        realProduct.save();
+                    }        
+                })
             })
             newRecord.save();
             req.user.orderRecord.push(newRecord);

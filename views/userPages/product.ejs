@@ -15,7 +15,7 @@
                     <%= product.desc %>
                 </p>
                 <!-- Product Price -->
-                <h5 class="card-title float-start">฿ <%= product.price %>
+                <h5 class="card-title float-start">฿ <%= product.price.toLocaleString() %>
                 </h5>
                 <form action="/user/cart/add/<%= product._id %>" method="post">
                     <div class="form-floating mt-5 mb-2">

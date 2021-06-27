@@ -34,17 +34,17 @@
                       <%= product.name %>
                     </td>
                     <td>
-                      <%= product.price %>
+                      ฿ <%= product.price.toLocaleString() %>
                     </td>
                     <td>
                       <div class="text-center">
                         <a href="/user/cart/qty/dec/<%= product.id %>" class="btn btn-secondary fw-bolder">-</a>
-                        <input class="text-center"value="<%= product.qty %>" disabled>
+                        <input class="text-center"value="<%= product.qty.toLocaleString() %>" disabled>
                         <a href="/user/cart/qty/inc/<%= product.id %>" class="btn btn-secondary fw-bolder">+</a>
                       </div>
                     </td>
                     <td>
-                      <%= product.price * product.qty %>
+                      ฿ <%= (product.price * product.qty).toLocaleString() %>
                     </td>
                     <% allP +=product.price * product.qty %>
                       <td><a href="/user/cart/delete/<%= product.id %>" class="btn btn-danger">Delete</a></td>
@@ -54,7 +54,7 @@
     </table>
     <div>
       <div class="float-end text-end">
-        <h4>Total price = ฿ <%= allP %>
+        <h4>Total price = ฿ <%= allP.toLocaleString() %>
         </h4>
         <form onsubmit="return confirm('Confirm Buy all Product in Cart?');" action="/user/cart/buy" method="GET">
           <button class="btn btn-warning fw-bolder">Buy</button>

@@ -21,7 +21,7 @@ mongoose.connect(config.database, { useNewUrlParser: true, useUnifiedTopology: t
         console.error
     }
 });
-seedDB();
+// seedDB();
 
 // use
 const app = express();

@@ -9,6 +9,10 @@ let curCategory = {};
 let curFilter = {};
 let curSortby = { createdAt: -1 };
 
+let displayCategory = 'all';
+let displayFilter = 'all';
+let displaySortby = 'newest';
+
 const fileStorageEngine = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, "./public/images");
@@ -38,7 +42,8 @@ router.get('/home', (req, res) => {
                 if (err) {
                     console.log(err);
                 } else {
-                    res.render('adminPages/home.ejs', { product: allProduct, category: allCategory});
+                    res.render('adminPages/home.ejs', { product: allProduct, category: allCategory, 
+                        displayCategory: displayCategory, displayFilter: displayFilter, displaySortby: displaySortby });
                 }
             });
         }
@@ -51,8 +56,10 @@ router.get('/home/category/:title', (req, res) => {
     const category = req.params.title.toLowerCase();
     if (category === 'all') {
         curCategory = {};
+        displayCategory = 'all';
     } else {
         curCategory = { category: category };
+        displayCategory = category.toString();
     }
     res.redirect('/admin/home');
 })
@@ -61,11 +68,11 @@ router.get('/home/category/:title', (req, res) => {
 router.get('/home/filter/:option', (req, res) => {
     console.log('Get | Admin home Filter');
     switch (req.params.option) {
-        case '01': curFilter = { "price": { $gte: 0, $lte: 1000 } }; break;
-        case '13': curFilter = { "price": { $gte: 1000, $lte: 3000 } }; break;
-        case '31': curFilter = { "price": { $gte: 3001, $lte: 10000 } }; break;
-        case '10': curFilter = { "price": { $gte: 10001, $lte: 999999999 } }; break;
-        default: curFilter = { "price": { $gte: 0, $lte: 999999999 } }; break;
+        case '01': curFilter = { "price": { $gte: 0, $lte: 1000 } }, displayFilter = 'price 0 - 1,000'; break;
+        case '13': curFilter = { "price": { $gte: 1000, $lte: 3000 } }, displayFilter = 'price 1,001 - 3,000'; break;
+        case '31': curFilter = { "price": { $gte: 3001, $lte: 10000 } }, displayFilter = 'price 3,001 - 10,000'; break;
+        case '10': curFilter = { "price": { $gte: 10001, $lte: 999999999 } }, displayFilter = 'price > 10,000'; break;
+        default: curFilter = { "price": { $gte: 0, $lte: 999999999 } }, displayFilter = 'all'; break;
     }
     res.redirect('/admin/home');
 })
@@ -76,12 +83,16 @@ router.get('/home/sortby/:option', (req, res) => {
     let option = req.params.option;
     if (option === 'newest') {
         curSortby = { createdAt: -1 };
+        displaySortby = 'newest';
     } else if (option === 'oldest') {
         curSortby = { createdAt: 1 };
+        displaySortby = 'oldest';
     } else if (option === 'pricelowtohigh') {
         curSortby = { price: 1 };
+        displaySortby = 'price low to high';
     } else if (option === 'pricehightolow') {
         curSortby = { price: -1 };
+        displaySortby = 'price high to low';
     }
     res.redirect('/admin/home');
 })
@@ -233,11 +244,11 @@ router.post('/new-product', upload.single("image"), (req, res) => {
 // Order record
 router.get('/record', (req, res) => {
     console.log('Get | Admin order record');
-    Record.find({}).sort({ createdAt: -1 }).exec(function (err, allRecords){
+    Product.find({}).sort({sp: -1, so: -1, price: -1}).exec(function (err, allProduct) {
         if (err) {
             console.log(err);
         } else {
-            res.render('adminPages/record.ejs', {record: allRecords});
+            res.render('adminPages/record.ejs', { product: allProduct });
         }
     })
 })
