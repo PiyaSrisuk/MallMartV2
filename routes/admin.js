@@ -147,8 +147,10 @@ router.post('/edit-product/:id', (req, res) => {
     Product.findByIdAndUpdate({_id: req.params.id}, editProduct, (function(err, product){
         if (err) {
             console.log(err);
+            req.flash('error', 'Edit product failed');
         } else {
             console.log("Update product successful " + product.name);
+            req.flash('success', 'Edit product successful');
             res.redirect('/admin/home');
         }
     }))
@@ -161,8 +163,10 @@ router.post('/delete-product', (req, res) => {
     Product.findByIdAndDelete({_id: id}, (function (err, product){
         if (err) {
             console.log(err);
+            req.flash('error', 'Deleted product failed');
         } else {
             console.log("-----Delete product successful " + product.name);
+            req.flash('success', 'Deleted product successful');
             res.redirect('/admin/home');
         }
     }))
@@ -188,8 +192,10 @@ router.post('/category/new', (req, res) => {
     Category.create(title, function(err, title){
         if(err) {
             console.log(err);
+            req.flash('error', 'New category failed');
         } else {
             console.log('-----New category added (' + title + ')');
+            req.flash('success', 'New category successful');
             res.redirect('/admin/category');
         }
     })
@@ -202,8 +208,10 @@ router.post('/category/delete', (req, res) => {
     Category.findOneAndDelete({ title: title }, function(err, title){
         if(err) {
             console.log(err);
+            req.flash('error', 'Deleted category failed');
         } else {
             console.log('-----Delete category ' + title);
+            req.flash('success', 'Deleted category successful');
             res.redirect('/admin/category');      
         }           
     })
@@ -234,8 +242,10 @@ router.post('/new-product', upload.single("image"), (req, res) => {
     Product.create(newProduct, function(err, product){
         if (err) {
             console.log(err);
+            req.flash('error', 'Created new product failed');
         } else {
             console.log('-----New product added ' + product.name);
+            req.flash('success', 'Created new product successful');
             res.redirect('/admin/new-product');
         }
     })

@@ -134,10 +134,12 @@ router.post('/cart/add/:id', isLoggedIn, async (req, res) => {
                 }
                 req.user.cart.push(newCart);
                 req.user.save();
+                req.flash('success', 'Add to cart successfully!');
                 res.redirect('/user/home');
             }
         }))
     } else {
+        req.flash('error', 'Can not add to Cart!');
         res.redirect('/user/home');
     }
 
@@ -192,6 +194,7 @@ router.get('/cart/buy', (req, res) => {
             req.user.orderRecord.push(newRecord);
             req.user.cart = [];
             req.user.save();
+            req.flash('success', 'Buy all product successfully');
             res.redirect('/user/cart');
         }
     })
