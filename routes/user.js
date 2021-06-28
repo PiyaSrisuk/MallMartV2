@@ -93,7 +93,11 @@ router.post('/home/search', (req, res) => {
                 if (err) {
                     console.log(err);
                 } else {
-                    res.render('userPages/home.ejs', { product: allProduct, category: allCategory });
+                    displayCategory = 'all';
+                    displayFilter = 'all';
+                    displaySortby = 'newest';
+                    res.render('userPages/home.ejs', { product: allProduct, category: allCategory, 
+                        displayCategory: displayCategory, displayFilter: displayFilter, displaySortby: displaySortby });
                 }
             });
         }

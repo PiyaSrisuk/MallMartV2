@@ -108,8 +108,12 @@ router.post('/home/search', (req, res) => {
             Product.find({name: { $regex: '.*' + key + '.*' }}).exec(function (err, allProduct) {
                 if (err) {
                     console.log(err);
-                } else {                
-                    res.render('adminPages/home.ejs', { product: allProduct, category: allCategory });
+                } else {          
+                    displayCategory = 'all';
+                    displayFilter = 'all';
+                    displaySortby = 'newest';      
+                    res.render('adminPages/home.ejs', { product: allProduct, category: allCategory, 
+                        displayCategory: displayCategory, displayFilter: displayFilter, displaySortby: displaySortby });
                 }
             });
         }
